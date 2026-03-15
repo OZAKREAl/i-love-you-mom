@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>С Днём Рождения, Мамуля!</title>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Caveat:wght@500;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --cream: #FDF6F3;
+  --text: #3A1F24;
+  --text-secondary: #7A5A60;
+  --text-light: #A8898E;
+  --bordeaux-1: #F5E6E0; --bordeaux-2: #E8C4CC;
+  --rose-1: #F8E8EC; --rose-2: #D4949E;
+  --blush-1: #FAF0EC; --blush-2: #C8868E;
+  --wine-1: #F0DCD6; --wine-2: #B5546A;
+  --ivory-1: #FBF4EF; --ivory-2: #E8D8D0;
+  --deep: #8B3A4A;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'DM Sans', sans-serif;
+  color: var(--text);
+  background: var(--cream);
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+h1, h2, h3 { font-family: 'Instrument Serif', serif; font-weight: 400; }
+.container { max-width: 900px; margin: 0 auto; padding: 0 2rem; }
+.block { position: relative; padding: 7rem 0; overflow: hidden; }
+
+.block-hero {
+  min-height: 100vh; display: flex; align-items: center; justify-content: center;
+  background: linear-gradient(180deg, #FFF8F4 0%, var(--bordeaux-1) 50%, var(--rose-1) 100%);
+}
+.block-gratitude { background: linear-gradient(180deg, var(--rose-1) 0%, var(--blush-1) 40%, var(--cream) 100%); }
+.block-reasons { background: linear-gradient(180deg, var(--cream) 0%, var(--ivory-1) 50%, var(--bordeaux-1) 100%); }
+.block-gallery { background: linear-gradient(180deg, var(--bordeaux-1) 0%, var(--rose-1) 50%, var(--blush-1) 100%); }
+.block-compliments { background: linear-gradient(180deg, var(--blush-1) 0%, var(--ivory-1) 50%, #FFF8F4 100%); }
+.block-wishes { background: linear-gradient(180deg, #FFF8F4 0%, var(--bordeaux-1) 50%, var(--rose-1) 100%); padding-bottom: 10rem; }
+
+.blob { position: absolute; opacity: 0.25; pointer-events: none; }
+
+.hero-content { text-align: center; position: relative; z-index: 2; padding: 2rem; }
+.hero-tag {
+  display: inline-block; font-size: 0.8rem; font-weight: 600;
+  letter-spacing: 0.15em; text-transform: uppercase; color: var(--text-light);
+  margin-bottom: 2rem; background: rgba(255,255,255,0.6);
+  padding: 0.5rem 1.2rem; border-radius: 100px; backdrop-filter: blur(10px);
+}
+.hero-content h1 { font-size: clamp(3rem, 8vw, 5.5rem); line-height: 1.1; margin-bottom: 1.5rem; letter-spacing: -0.02em; }
+.hero-content h1 em {
+  font-family: 'Instrument Serif', serif; font-style: italic;
+  background: linear-gradient(135deg, #8B3A4A, #B5546A, #D4949E);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+}
+.hero-sub { font-size: 1.25rem; color: var(--text-secondary); max-width: 480px; margin: 0 auto 3rem; line-height: 1.6; }
+.scroll-cue { display: inline-flex; align-items: center; gap: 0.5rem; font-size: 0.85rem; color: var(--text-light); cursor: pointer; transition: color 0.3s; text-decoration: none; }
+.scroll-cue:hover { color: var(--text-secondary); }
+.scroll-cue svg { animation: gentleBounce 2.5s ease-in-out infinite; }
+@keyframes gentleBounce { 0%,100%{transform:translateY(0)} 50%{transform:translateY(6px)} }
+
+.section-header { text-align: center; margin-bottom: 4rem; }
+.section-header h2 { font-size: clamp(2rem, 5vw, 3rem); line-height: 1.2; margin-bottom: 1rem; }
+.section-header p { font-size: 1.05rem; color: var(--text-secondary); max-width: 520px; margin: 0 auto; line-height: 1.6; }
+
+/* ===== GRATITUDE CARDS ===== */
+.grat-list {
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+}
+
+.grat-card {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2.5rem;
+  align-items: center;
+  padding: 2.5rem;
+  background: rgba(255,255,255,0.55);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255,255,255,0.8);
+  border-radius: 28px;
+  transition: transform 0.5s cubic-bezier(0.16,1,0.3,1), box-shadow 0.5s;
+  position: relative;
+  overflow: hidden;
+}
+
+.grat-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 24px 60px rgba(139,58,74,0.08);
+}
+
+.grat-card:nth-child(even) { direction: rtl; }
+.grat-card:nth-child(even) > * { direction: ltr; }
+
+.grat-card-info {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.grat-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-light);
+  background: rgba(139,58,74,0.06);
+  padding: 0.4rem 0.9rem;
+  border-radius: 100px;
+  width: fit-content;
+}
+
+.grat-card h3 {
+  font-size: 1.6rem;
+  line-height: 1.25;
+  color: var(--deep);
+}
+
+.grat-card .grat-desc {
+  font-size: 1.05rem;
+  color: var(--text-secondary);
+  line-height: 1.7;
+}
+
+.grat-svg-deco {
+  position: absolute;
+  opacity: 0.06;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.grat-card > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* ===== MEDIA SLOT ===== */
+.media-slot {
+  width: 100%;
+  border-radius: 20px;
+  overflow: hidden;
+  position: relative;
+  background: rgba(139,58,74,0.03);
+  border: 1.5px dashed rgba(139,58,74,0.12);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: border-color 0.3s;
+  min-height: 120px;
+}
+
+.grat-card:hover .media-slot {
+  border-color: rgba(139,58,74,0.2);
+}
+
+.media-slot img,
+.media-slot video {
+  width: 100%;
+  height: auto;
+  border-radius: 18px;
+  display: none;
+}
+
+.media-slot img.active,
+.media-slot video.active {
+  display: block;
+}
+
+.media-placeholder {
+  color: var(--text-light);
+  font-size: 0.85rem;
+  text-align: center;
+  line-height: 1.5;
+  padding: 3rem 1rem;
+}
+
+.play-overlay {
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  background: rgba(139,58,74,0.15);
+  border-radius: 18px;
+  cursor: pointer;
+  transition: background 0.3s;
+  z-index: 2;
+}
+
+.play-overlay.active { display: flex; }
+.play-overlay:hover { background: rgba(139,58,74,0.25); }
+
+.play-btn {
+  width: 64px; height: 64px;
+  background: rgba(255,255,255,0.9);
+  backdrop-filter: blur(10px);
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 4px 20px rgba(139,58,74,0.2);
+  transition: transform 0.3s;
+}
+
+.play-overlay:hover .play-btn { transform: scale(1.08); }
+.play-btn svg { margin-left: 3px; }
+
+/* ===== REASONS ===== */
+.reasons-list { display: flex; flex-direction: column; gap: 1.2rem; max-width: 640px; margin: 0 auto; }
+.reason-item {
+  display: flex; align-items: flex-start; gap: 1.5rem; padding: 1.8rem 2rem;
+  background: rgba(255,255,255,0.5); backdrop-filter: blur(15px);
+  border: 1px solid rgba(255,255,255,0.7); border-radius: 20px;
+  transition: transform 0.4s cubic-bezier(0.16,1,0.3,1), box-shadow 0.4s;
+}
+.reason-item:hover { transform: translateX(6px); box-shadow: 0 12px 40px rgba(139,58,74,0.06); }
+.reason-num { font-family: 'Instrument Serif', serif; font-style: italic; font-size: 2.2rem; line-height: 1; color: var(--deep); opacity: 0.2; flex-shrink: 0; min-width: 36px; }
+.reason-text { font-size: 1.05rem; line-height: 1.6; color: var(--text-secondary); padding-top: 0.3rem; }
+
+/* ===== GALLERY ===== */
+.gallery-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
+.gallery-item {
+  aspect-ratio: 1; border-radius: 20px; background: rgba(255,255,255,0.45);
+  backdrop-filter: blur(10px); border: 1.5px dashed rgba(139,58,74,0.08);
+  display: flex; align-items: center; justify-content: center;
+  color: var(--text-light); font-size: 0.8rem;
+  transition: all 0.5s cubic-bezier(0.16,1,0.3,1); overflow: hidden;
+}
+.gallery-item:hover { transform: scale(1.03) rotate(-1deg); box-shadow: 0 16px 48px rgba(139,58,74,0.06); }
+
+/* ===== COMPLIMENTS ===== */
+.compliment-machine {
+  max-width: 520px; margin: 0 auto; text-align: center; padding: 3.5rem 2.5rem;
+  background: rgba(255,255,255,0.5); backdrop-filter: blur(20px);
+  border: 1px solid rgba(255,255,255,0.7); border-radius: 32px;
+}
+.compliment-display { min-height: 90px; display: flex; align-items: center; justify-content: center; margin-bottom: 2rem; }
+.compliment-text { font-family: 'Caveat', cursive; font-size: 1.7rem; line-height: 1.4; color: var(--text); transition: opacity 0.3s; }
+.compliment-btn {
+  padding: 1rem 2.5rem; border-radius: 100px; border: none;
+  background: linear-gradient(135deg, #8B3A4A, #B5546A, #D4949E);
+  color: white; font-family: 'DM Sans', sans-serif; font-weight: 700; font-size: 1rem;
+  cursor: pointer; transition: all 0.4s; box-shadow: 0 8px 32px rgba(139,58,74,0.2);
+}
+.compliment-btn:hover { transform: translateY(-3px); box-shadow: 0 12px 40px rgba(139,58,74,0.3); }
+.compliment-btn:active { transform: translateY(0) scale(0.97); }
+
+/* ===== WISHES ===== */
+.wishes-content { text-align: center; max-width: 600px; margin: 0 auto; }
+.wishes-content p { font-size: 1.15rem; line-height: 1.9; color: var(--text-secondary); }
+.wishes-content em { font-family: 'Instrument Serif', serif; font-style: italic; color: var(--deep); }
+.wishes-heart { display: block; margin-top: 2.5rem; font-size: 3rem; animation: heartbeat 2s ease-in-out infinite; }
+@keyframes heartbeat { 0%,100%{transform:scale(1)} 14%{transform:scale(1.12)} 28%{transform:scale(1)} 42%{transform:scale(1.08)} }
+
+.reveal { opacity: 0; transform: translateY(30px); transition: opacity 0.9s cubic-bezier(0.16,1,0.3,1), transform 0.9s cubic-bezier(0.16,1,0.3,1); }
+.reveal.visible { opacity: 1; transform: translateY(0); }
+.reveal-d1 { transition-delay: 0.15s; }
+.reveal-d2 { transition-delay: 0.3s; }
+
+@media (max-width: 700px) {
+  .grat-card { grid-template-columns: 1fr; gap: 1.5rem; padding: 1.8rem; }
+  .grat-card:nth-child(even) { direction: ltr; }
+  .gallery-grid { grid-template-columns: repeat(2, 1fr); }
+  .block { padding: 5rem 0; }
+  .container { padding: 0 1.25rem; }
+  .reason-item { padding: 1.4rem 1.2rem; gap: 1rem; }
+}
+</style>
+</head>
+<body>
+
+<!-- ===== HERO ===== -->
+<div class="block block-hero">
+  <svg class="blob" style="top:5%;right:-5%;width:500px;opacity:0.2" viewBox="0 0 500 500"><path d="M440,300Q410,400,310,430Q210,460,140,390Q70,320,90,220Q110,120,200,80Q290,40,370,100Q450,160,440,300Z" fill="#E8C4CC"/></svg>
+  <svg class="blob" style="bottom:0;left:-8%;width:450px;opacity:0.15" viewBox="0 0 500 500"><path d="M420,310Q380,420,270,440Q160,460,100,370Q40,280,90,180Q140,80,260,70Q380,60,420,180Q460,300,420,310Z" fill="#D4949E"/></svg>
+  <div class="hero-content">
+    <div class="hero-tag">с любовью</div>
+    <h1>С Днём Рождения,<br><em>Мамуля</em></h1>
+    <p class="hero-sub">Для самого важного человека в моей жизни. Спасибо, что ты есть.</p>
+    <a class="scroll-cue" onclick="document.getElementById('gratitude').scrollIntoView({behavior:'smooth'})">
+      <span>Листай вниз</span>
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 3v10M4 9l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </a>
+  </div>
+</div>
+
+<!-- ===== GRATITUDE CARDS ===== -->
+<div class="block block-gratitude" id="gratitude">
+  <svg class="blob" style="top:8%;left:-80px;width:320px" viewBox="0 0 400 400"><path d="M340,250Q300,340,200,350Q100,360,70,260Q40,160,120,90Q200,20,290,80Q380,140,340,250Z" fill="#E8C4CC"/></svg>
+  <svg class="blob" style="bottom:10%;right:-60px;width:280px" viewBox="0 0 400 400"><path d="M330,270Q280,370,170,360Q60,350,60,240Q60,130,170,80Q280,30,340,140Q400,250,330,270Z" fill="#D4949E"/></svg>
+  <div class="container">
+    <div class="section-header reveal">
+      <h2>Слова, которые <em>от сердца</em></h2>
+      <p>Мам, я не всегда говорю это вслух, но ты должна это знать.</p>
+    </div>
+    <div class="grat-list">
+
+      <!-- 1. ЛУЧШАЯ МАМА -->
+      <div class="grat-card reveal">
+        <svg class="grat-svg-deco" style="top:-20px;right:-20px;width:220px" viewBox="0 0 220 220">
+          <path d="M110,45 C110,45 145,20 165,45 C185,70 165,100 110,145 C55,100 35,70 55,45 C75,20 110,45 110,45Z" fill="#8B3A4A" opacity="0.5"/>
+          <path d="M110,65 C110,65 130,50 142,65 C154,80 135,100 110,125 C85,100 66,80 78,65 C90,50 110,65 110,65Z" fill="#B5546A" opacity="0.3"/>
+          <circle cx="60" cy="170" r="4" fill="#E8C4CC" opacity="0.4"/>
+          <circle cx="160" cy="165" r="6" fill="#E8C4CC" opacity="0.3"/>
+          <circle cx="90" cy="185" r="3" fill="#D4949E" opacity="0.3"/>
+        </svg>
+        <div class="grat-card-info">
+          <div class="grat-badge">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+            от всего сердца
+          </div>
+          <h3>Ты самая лучшая мама на свете</h3>
+          <p class="grat-desc">Это не просто слова. Это то, что я чувствую каждый день. Ты — мой самый близкий человек, моя опора и мой дом. Где бы я ни был — я всегда знаю, что ты рядом.</p>
+        </div>
+        <div class="media-slot" onclick="playVideo(this)">
+            <img class="active" src="4.jpg">
+          <div class="play-overlay">
+            <div class="play-btn">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="var(--text)"><polygon points="8,5 20,12 8,19"/></svg>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 2. БЛАГОДАРНОСТЬ -->
+      <div class="grat-card reveal">
+        <svg class="grat-svg-deco" style="top:-10px;left:-20px;width:200px" viewBox="0 0 200 200">
+          <path d="M60,80 C60,60 80,40 100,40 C120,40 140,60 140,80 C140,120 100,150 100,150 C100,150 60,120 60,80Z" fill="#B5546A" opacity="0.3"/>
+          <path d="M80,100 L90,110 L120,80" fill="none" stroke="#8B3A4A" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" opacity="0.35"/>
+          <circle cx="45" cy="130" r="5" fill="#E8C4CC" opacity="0.3"/>
+          <circle cx="155" cy="55" r="4" fill="#D4949E" opacity="0.3"/>
+          <path d="M30,170 Q50,155 70,170 Q90,155 110,170" fill="none" stroke="#E8C4CC" stroke-width="1.5" opacity="0.3"/>
+        </svg>
+        <div class="grat-card-info">
+          <div class="grat-badge">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"/><path d="M7 12.5l3 3 7-7"/></svg>
+            благодарность
+          </div>
+          <h3>Я благодарен за всё, что ты делаешь</h3>
+          <p class="grat-desc">Мам, я это очень ценю. Каждый совет, каждый звонок, каждое «ты покушал?» — за всем этим стоит бесконечная любовь. Я знаю, и я благодарен. Каждый день.</p>
+        </div>
+        <div class="media-slot" onclick="playVideo(this)">
+            <img class="active" src="3.jpg">
+          <div class="play-overlay">
+            <div class="play-btn">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="var(--text)"><polygon points="8,5 20,12 8,19"/></svg>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 3. ЗАЖИГАЛОЧКА -->
+      <div class="grat-card reveal">
+        <svg class="grat-svg-deco" style="bottom:-10px;right:-10px;width:220px" viewBox="0 0 220 220">
+          <path d="M110,30 L118,70 L158,70 L125,95 L138,135 L110,112 L82,135 L95,95 L62,70 L102,70Z" fill="#8B3A4A" opacity="0.35"/>
+          <path d="M60,160 L65,175 L80,175 L68,185 L72,200 L60,192 L48,200 L52,185 L40,175 L55,175Z" fill="#D4949E" opacity="0.25"/>
+          <path d="M160,155 L163,165 L174,165 L166,172 L168,182 L160,176 L152,182 L154,172 L146,165 L157,165Z" fill="#E8C4CC" opacity="0.3"/>
+          <circle cx="40" cy="60" r="3" fill="#B5546A" opacity="0.3"/>
+          <circle cx="185" cy="45" r="4" fill="#E8C4CC" opacity="0.25"/>
+          <circle cx="170" cy="120" r="2.5" fill="#D4949E" opacity="0.3"/>
+        </svg>
+        <div class="grat-card-info">
+          <div class="grat-badge">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26Z"/></svg>
+            пожелание
+          </div>
+          <h3>Оставайся такой же зажигалочкой</h3>
+          <p class="grat-desc">Яркой, тёплой звёздочкой в моей жизни. Ты умеешь сделать любой день светлее, любую проблему — решаемой, любой вечер — уютным. Не меняйся. Ты идеальна такой, какая есть.</p>
+        </div>
+        <div class="media-slot" onclick="playVideo(this)">
+            <img class="active" src="2.jpg">
+          <div class="play-overlay">
+            <div class="play-btn">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="var(--text)"><polygon points="8,5 20,12 8,19"/></svg>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ===== REASONS ===== -->
+<div class="block block-reasons">
+  <svg class="blob" style="bottom:5%;right:-60px;width:280px" viewBox="0 0 400 400"><path d="M330,270Q280,370,170,360Q60,350,60,240Q60,130,170,80Q280,30,340,140Q400,250,330,270Z" fill="#E8C4CC"/></svg>
+  <div class="container">
+    <div class="section-header reveal">
+      <h2>За что я тебя <em>люблю</em></h2>
+      <p>Список можно было бы продолжать бесконечно, но вот главное.</p>
+    </div>
+    <div class="reasons-list">
+      <div class="reason-item reveal"><span class="reason-num">1</span><span class="reason-text">За то, что ты всегда веришь в меня — даже когда я сам не верю.</span></div>
+      <div class="reason-item reveal"><span class="reason-num">2</span><span class="reason-text">За твой смех, который может поднять настроение в любой ситуации.</span></div>
+      <div class="reason-item reveal"><span class="reason-num">3</span><span class="reason-text">За «ты покушал?», за «оденься потеплее» и за тысячу мелочей, которые значат всё.</span></div>
+      <div class="reason-item reveal"><span class="reason-num">4</span><span class="reason-text">За то, что ты сильная, но никогда не забываешь быть нежной.</span></div>
+      <div class="reason-item reveal"><span class="reason-num">5</span><span class="reason-text">За то, что ты — это дом. Не стены, а чувство, что всё будет хорошо.</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== COMPLIMENTS ===== -->
+<div class="block block-compliments">
+  <div class="container">
+    <div class="section-header reveal">
+      <h2>Нажми и <em>улыбнись</em></h2>
+      <p>Каждое нажатие — правда о тебе, мамуль.</p>
+    </div>
+    <div class="compliment-machine reveal">
+      <div class="compliment-display">
+        <div class="compliment-text" id="complimentText">Нажми кнопку ↓</div>
+      </div>
+      <button class="compliment-btn" onclick="newCompliment()">Получить слова любви</button>
+    </div>
+  </div>
+</div>
+
+<!-- ===== WISHES ===== -->
+<div class="block block-wishes">
+  <svg class="blob" style="bottom:-10%;right:-5%;width:300px;opacity:0.18" viewBox="0 0 400 400"><path d="M340,250Q300,340,200,350Q100,360,70,260Q40,160,120,90Q200,20,290,80Q380,140,340,250Z" fill="#E8C4CC"/></svg>
+  <div class="container">
+    <div class="section-header reveal"><h2>И напоследок</h2></div>
+    <div class="wishes-content reveal">
+      <p>Мамуля, спасибо тебе за всё. За любовь, за терпение, за то, что ты&nbsp;рядом.<br><br>
+      Пусть каждый новый день приносит тебе столько радости, сколько ты&nbsp;даришь мне. Ты заслуживаешь самого лучшего.<br><br>
+      Люблю тебя бесконечно. Сегодня, завтра и&nbsp;всегда.<br>Твой сын ♥</p>
+      <span class="wishes-heart">❤️</span>
+    </div>
+  </div>
+</div>
+
+<script>
+// ===== SCROLL REVEAL =====
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+// ===== VIDEO PLAYBACK =====
+function playVideo(slot) {
+  const video = slot.querySelector('video');
+  if (!video) return;
+  const overlay = slot.querySelector('.play-overlay');
+  if (video.paused) {
+    video.play();
+    if (overlay) overlay.style.opacity = '0';
+    video.addEventListener('ended', () => { if (overlay) overlay.style.opacity = '1'; }, { once: true });
+  } else {
+    video.pause();
+    if (overlay) overlay.style.opacity = '1';
+  }
+}
+
+document.querySelectorAll('.media-slot').forEach(slot => {
+  const video = slot.querySelector('video.active');
+  const img = slot.querySelector('img.active');
+  const placeholder = slot.querySelector('.media-placeholder');
+  const overlay = slot.querySelector('.play-overlay');
+  if (video) { if (placeholder) placeholder.style.display = 'none'; overlay.classList.add('active'); }
+  else if (img) { if (placeholder) placeholder.style.display = 'none'; }
+});
+
+// ===== COMPLIMENTS =====
+const compliments = [
+  "Мамуля, ты — самый тёплый человек на планете",
+  "Твоя улыбка лечит лучше любого лекарства",
+  "Ты красивая, сильная и невероятная женщина",
+  "Спасибо, что всегда находишь нужные слова",
+  "Ты делаешь мир вокруг себя светлее просто своим присутствием",
+  "Твоя энергия и жизнелюбие вдохновляют каждый день",
+  "Ты — доказательство того, что супергерои существуют",
+  "Рядом с тобой любая проблема кажется решаемой",
+  "Ты подарила мне самое ценное — уверенность, что меня любят",
+  "Мам, ты лучше, чем ты думаешь. Серьёзно.",
+  "Когда я вырасту, я хочу быть хоть вполовину таким же крутым, как ты"
+];
+let lastIdx = -1;
+function newCompliment() {
+  let idx;
+  do { idx = Math.floor(Math.random() * compliments.length); } while (idx === lastIdx);
+  lastIdx = idx;
+  const el = document.getElementById('complimentText');
+  el.style.opacity = 0;
+  setTimeout(() => { el.textContent = compliments[idx]; el.style.opacity = 1; }, 250);
+}
+</script>
+</body>
+</html>
